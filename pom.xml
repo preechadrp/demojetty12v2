@@ -29,23 +29,6 @@
     </dependencies>
 
     <build>
-	   
-	    <!-- เอา dir webapp ไปด้วย -->
-		<resources>
-      		<resource>
-        		<directory>src/main/webapp</directory>
-				<targetPath>/webapp</targetPath>
-	        	<includes>
-		          	<include>**/*</include>
-		        </includes>
-	      	</resource>
-            <resource>
-        		<directory>src/main/resources</directory>
-				<includes>
-		          	<include>**/*</include>
-		        </includes>
-	      	</resource>
-    	</resources>
 
 		<plugins>
 
