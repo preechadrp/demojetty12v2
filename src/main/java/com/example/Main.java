@@ -50,7 +50,7 @@ public class Main {
 
 			server = new Server(threadPool);
 
-			addConnector(false, false);
+			addConnector(false);
 			addContext();
 
 			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -73,7 +73,7 @@ public class Main {
 
 	}
 
-	public static void addConnector(boolean useHttps, boolean useTrustStore) throws Exception {
+	public static void addConnector(boolean useHttps) throws Exception {
 
 		if (!useHttps) {
 
@@ -112,22 +112,6 @@ public class Main {
 			// กำหนด Protocol ที่อนุญาต (Allowed Protocols) ***
 			// ควรใช้ TLSv1.2 และ TLSv1.3 เท่านั้น หลีกเลี่ยง SSLv3, TLSv1, TLSv1.1
 			sslContextFactory.setIncludeProtocols("TLSv1.2", "TLSv1.3");
-
-			if (useTrustStore) {
-
-				URL truststoreUrl = Main.class.getClassLoader().getResource("/truststore.jks");
-				if (truststoreUrl != null) {
-					sslContextFactory.setTrustStorePath(truststoreUrl.toExternalForm());
-					sslContextFactory.setTrustStorePassword("password"); // รหัสผ่าน TrustStore
-
-					// ถ้าต้องการให้เซิร์ฟเวอร์ร้องขอ Client Certificate (Mutual TLS)
-					// sslContextFactory.setNeedClientAuth(true); // บังคับให้ไคลเอนต์ส่งใบรับรอง
-					// sslContextFactory.setWantClientAuth(true); // ร้องขอแต่ไม่บังคับ
-				} else {
-					System.out.println("Not found truststore.jks");
-				}
-
-			}
 
 			// สร้าง SslConnectionFactory ---
 			// SslConnectionFactory ทำหน้าที่จัดการการเชื่อมต่อ SSL/TLS
